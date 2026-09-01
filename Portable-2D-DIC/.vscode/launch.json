@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "DIC Studio (Qt/MinGW)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/out/build/windows-studio-release/DIC Studio.exe",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/mingw64/bin/gdb.exe",
+      "externalConsole": false,
+      "preLaunchTask": "DIC: Qt Studio configure + build + test"
+    },
+    {
+      "name": "DIC Edge CPU (synthetic)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/out/build/windows-cpu-debug/dic_edge.exe",
+      "args": ["--config", "config/dic-edge.demo.conf"],
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/mingw64/bin/gdb.exe",
+      "externalConsole": false,
+      "preLaunchTask": "DIC: CPU configure + build + test"
+    },
+    {
+      "name": "DIC Edge CUDA (RTX 5060)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/out/build/windows-cuda-release/dic_edge.exe",
+      "args": ["config/dic-edge.dev.conf"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "preLaunchTask": "DIC: CUDA configure + build + test"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "DIC: CPU configure + build + test",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/tools/cmake-vscode.cmd' --preset windows-cpu-debug; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & '${workspaceFolder}/tools/cmake-vscode.cmd' --build --preset build-windows-cpu; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; ctest --preset test-windows-cpu",
+      "problemMatcher": ["$gcc"],
+      "group": "test"
+    },
+    {
+      "label": "DIC: Qt Studio configure + build + test",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/tools/cmake-vscode.cmd' --preset windows-studio-release; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & '${workspaceFolder}/tools/cmake-vscode.cmd' --build --preset build-windows-studio; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; ctest --preset test-windows-studio --output-on-failure -E '(field_view_render|signal_view_render|preview_view_render)'",
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "DIC: Open demo platform",
+      "type": "shell",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File '${workspaceFolder}/tools/launch-demo.ps1'",
+      "dependsOn": "DIC: Qt Studio configure + build + test",
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "DIC: CUDA configure + build + test",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/tools/cmake-vscode.cmd' --preset windows-cuda-release; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & '${workspaceFolder}/tools/cmake-vscode.cmd' --build --preset build-windows-cuda; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; ctest --preset test-windows-cuda",
+      "problemMatcher": ["$msCompile"],
+      "group": "build"
+    },
+    {
+      "label": "DIC: GalaxySDK configure + build + test",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/tools/cmake-vscode.cmd' --preset windows-galaxy-release; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & '${workspaceFolder}/tools/cmake-vscode.cmd' --build --preset build-windows-galaxy; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; ctest --preset test-windows-galaxy",
+      "problemMatcher": ["$msCompile"],
+      "group": "build"
+    },
+    {
+      "label": "DIC: GalaxySDK + CUDA configure + build + test",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/tools/cmake-vscode.cmd' --preset windows-galaxy-cuda-release; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & '${workspaceFolder}/tools/cmake-vscode.cmd' --build --preset build-windows-galaxy-cuda; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; ctest --preset test-windows-galaxy-cuda",
+      "problemMatcher": ["$msCompile"],
+      "group": "build"
+    },
+    {
+      "label": "DIC: full-resolution CUDA benchmark",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/out/build/windows-cuda-release/dic_cuda_benchmark.exe' 4504 4096 32 20",
+      "dependsOn": "DIC: CUDA configure + build + test",
+      "problemMatcher": []
+    }
+  ]
+}

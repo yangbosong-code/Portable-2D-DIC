@@ -1,0 +1,7 @@
+/build*/
+/out/
+/integration-*/
+/self-test-*/
+/sessions/
+*.user
+*.log

@@ -1,0 +1,167 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "windows-cpu-debug",
+      "displayName": "Windows CPU Debug (MinGW)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/windows-cpu-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "D:/mingw64/bin/g++.exe",
+        "P2DIC_BUILD_TESTS": "ON",
+        "P2DIC_WITH_CUDA": "OFF",
+        "P2DIC_WITH_GALAXY": "OFF",
+        "P2DIC_BUILD_STUDIO": "OFF"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "windows-studio-release",
+      "displayName": "Windows DIC Studio Release (Qt 6.11)",
+      "inherits": "windows-cpu-debug",
+      "binaryDir": "${sourceDir}/out/build/windows-studio-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_PREFIX_PATH": "D:/Dev/Qt/6.11.1/mingw_64",
+        "P2DIC_BUILD_STUDIO": "ON"
+      }
+    },
+    {
+      "name": "windows-cuda-release",
+      "displayName": "Windows DIC Edge CUDA Release (RTX 50, VS Code task)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/windows-cuda-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CUDA_COMPILER": "D:/Dev/CUDA-13.3/bin/nvcc.exe",
+        "CMAKE_CUDA_ARCHITECTURES": "120",
+        "P2DIC_BUILD_TESTS": "ON",
+        "P2DIC_WITH_CUDA": "ON",
+        "P2DIC_WITH_GALAXY": "OFF",
+        "P2DIC_BUILD_STUDIO": "OFF"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "windows-galaxy-release",
+      "displayName": "Windows DIC Edge GalaxySDK Release (VS Code task)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/windows-galaxy-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "P2DIC_BUILD_TESTS": "ON",
+        "P2DIC_WITH_CUDA": "OFF",
+        "P2DIC_WITH_GALAXY": "ON",
+        "P2DIC_BUILD_STUDIO": "OFF",
+        "GALAXY_SDK_ROOT": "C:/Users/yangb/Desktop/GalaxySDK/Development"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "windows-galaxy-cuda-release",
+      "displayName": "Windows DIC Edge GalaxySDK + CUDA Release",
+      "inherits": "windows-cuda-release",
+      "binaryDir": "${sourceDir}/out/build/windows-galaxy-cuda-release",
+      "cacheVariables": {
+        "P2DIC_WITH_GALAXY": "ON",
+        "GALAXY_SDK_ROOT": "C:/Users/yangb/Desktop/GalaxySDK/Development"
+      }
+    },
+    {
+      "name": "jetson-release",
+      "displayName": "Jetson Orin Release (CUDA + GalaxySDK)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/jetson-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CUDA_ARCHITECTURES": "87",
+        "P2DIC_BUILD_TESTS": "ON",
+        "P2DIC_WITH_CUDA": "ON",
+        "P2DIC_WITH_GALAXY": "ON",
+        "P2DIC_BUILD_STUDIO": "OFF",
+        "GALAXY_SDK_ROOT": "$env{GALAXY_SDK_ROOT}"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-windows-cpu",
+      "configurePreset": "windows-cpu-debug"
+    },
+    {
+      "name": "build-windows-studio",
+      "configurePreset": "windows-studio-release"
+    },
+    {
+      "name": "build-windows-cuda",
+      "configurePreset": "windows-cuda-release"
+    },
+    {
+      "name": "build-windows-galaxy",
+      "configurePreset": "windows-galaxy-release"
+    },
+    {
+      "name": "build-windows-galaxy-cuda",
+      "configurePreset": "windows-galaxy-cuda-release"
+    },
+    {
+      "name": "build-jetson",
+      "configurePreset": "jetson-release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "test-windows-cpu",
+      "configurePreset": "windows-cpu-debug",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "test-windows-studio",
+      "configurePreset": "windows-studio-release",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "test-windows-cuda",
+      "configurePreset": "windows-cuda-release",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "test-windows-galaxy",
+      "configurePreset": "windows-galaxy-release",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "test-windows-galaxy-cuda",
+      "configurePreset": "windows-galaxy-cuda-release",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "test-jetson",
+      "configurePreset": "jetson-release",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

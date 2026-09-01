@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+control_port="$(awk -F= '
+  $1 ~ /^[[:space:]]*network.control_port[[:space:]]*$/ {
+    gsub(/[[:space:]]/, "", $2); print $2; exit
+  }
+' /etc/p2dic/dic-edge.conf)"
+control_port="${control_port:-17840}"
+response="$(/opt/p2dic/bin/dic_ctl PING 127.0.0.1 "${control_port}")"
+case "${response}" in
+  "OK PONG "*) exit 0 ;;
+  *)
+    echo "DIC Edge health check received an unexpected response: ${response}" >&2
+    exit 1
+    ;;
+esac

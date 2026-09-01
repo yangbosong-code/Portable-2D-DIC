@@ -1,0 +1,8 @@
+[Unit]
+Description=Portable 2D-DIC Edge health check
+After=p2dic-edge.service
+OnFailure=p2dic-recover.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/p2dic/bin/p2dic-healthcheck

@@ -1,0 +1,27 @@
+[Unit]
+Description=Portable 2D-DIC Edge Service
+After=network-online.target local-fs.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=p2dic
+Group=p2dic
+WorkingDirectory=/var/lib/p2dic
+ExecStart=/opt/p2dic/bin/dic_edge --config /etc/p2dic/dic-edge.conf
+Restart=on-failure
+RestartSec=2
+KillSignal=SIGTERM
+TimeoutStopSec=20
+Environment=CUDA_MODULE_LOADING=LAZY
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/p2dic
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

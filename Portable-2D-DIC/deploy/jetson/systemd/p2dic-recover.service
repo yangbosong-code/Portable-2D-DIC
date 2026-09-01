@@ -1,0 +1,6 @@
+[Unit]
+Description=Recover an unresponsive Portable 2D-DIC Edge service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl restart p2dic-edge.service

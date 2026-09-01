@@ -1,0 +1,11 @@
+[Unit]
+Description=Run the Portable 2D-DIC health check periodically
+
+[Timer]
+OnBootSec=30
+OnUnitActiveSec=30
+AccuracySec=5
+Persistent=false
+
+[Install]
+WantedBy=timers.target
